@@ -37,6 +37,15 @@ void display(vector<string> v);
 // Pass by reference example.
 void add_100_to_number(int &num);
 
+// Function calls have a certain amount of overhead.
+// Sometimes we have simple functions we can suggest
+// to the compiler to compile them "inline" - this
+// avoids the overhead, generates inline assembly code,
+// is faster, but could cause code bloat. The compiler
+// now a days is very smart and will inline things for
+// you where possible anyway.
+inline int inline_add_numbers(int a, int b);
+
 int main() {
   say_hello();
   cout << add_numbers(1, 4) << endl;
@@ -54,6 +63,8 @@ int main() {
   int num {100};
   add_100_to_number(num);
   cout << "Num was 100 and is now " << num << endl;
+
+  cout << add_numbers(3, 4) << endl;
 
   return 0;
 }
@@ -127,3 +138,7 @@ main:
   pop the return value
 
 */
+
+inline int inline_add_numbers(int a, int b) {
+  return a + b;
+}
