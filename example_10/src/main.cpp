@@ -99,3 +99,31 @@ void display(vector<string> v) {
 void add_100_to_number(int &num) {
   num += 100;
 }
+
+// Functions use the "function call stack" - LIFO - push/pop.
+// Stack frame - functions mus return control to the function that called it.
+// Each time a new func is called a new stack frame is created and pushed onto the stack.
+// When the function terminates we pop the stack frame and return.
+
+// So roughly what happens when main() calls example_func()?
+
+/*
+
+main:
+  push space for return value
+  push space for the params
+  push the return address
+  transfer control to example_func() (jmp)
+example_func:
+  push the address of the previous stack frame
+  push any register values that will need to be restored before returning to the caller
+  perform the code in example_func()
+  restore the register values
+  restore the previous stack frame (move the stack pointer)
+  store any function result
+  transfer control to the return address (jmp)
+main:
+  pop the params
+  pop the return value
+
+*/
