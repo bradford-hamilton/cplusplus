@@ -275,7 +275,6 @@ int *create_array(size_t size, int init_value) {
 }
 
 /*
-
 Do not return a pointer to a local variable from within the function scope.
 The variable was on the stack and the function terminates, so the variable
 has ended its lifetime.
@@ -292,5 +291,29 @@ int *or_this() {
   ...
   return int_ptr;
 }
+*/
 
+/*
+Some pointer pitfalls
+
+1. Uninitialized pointers
+  // This points anywhere vs. nowhere
+  int *int_ptr;
+
+2. Dangling pointers
+  // Pointer that is pointing to released memory.
+  // Example: 2 pointers point to the same data -
+    // one pointer releases the data with delete -
+    // the other pointer accesses the release data.
+  // Example: Pointer that points to memory that is invalid
+    // Example: We saw this when returning a pointer to function's local variable.
+3. Not checking if new failed to allocate memory
+  // If 'new' fails an exception is thrown
+    // We can use exception handling here.
+4. Leaking memory
+  // Forgetting to release allocated memory with delete
+  // If you lose your pointer to the storage allocated on the heap
+  // you have no way of accessing that storage again.
+  // The memory is orphaned or leaked.
+  // One of the most common pointer problems.
 */
