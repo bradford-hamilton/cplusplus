@@ -19,9 +19,14 @@ using namespace std;
 // This memory doesn't even have a variable name and the only
 // way to access it is via a pointer.
 
-// With OO pointers are how polymorphism works.
-
+// With OOP, pointers are how polymorphism works.
 // Really useful in embedded and systems applications.
+
+// Prototypes
+void double_data(int *int_ptr);
+// Overloading
+void display(const vector<string> *const vec);
+void display(int *array, int sentinel);
 
 // "&" - the address operator - unary operator - operand cannot be const or expression.
 int main() {
@@ -120,9 +125,9 @@ int main() {
   cout << new_scores[2] << endl; // 83
 
   // Pointer subscript notation: ------------------------------------
-  cout << new_scores_ptr[1] << endl; // 100
-  cout << new_scores_ptr[2] << endl; // 95
-  cout << new_scores_ptr[0] << endl; // 83
+  cout << new_scores_ptr[0] << endl; // 100
+  cout << new_scores_ptr[1] << endl; // 95
+  cout << new_scores_ptr[2] << endl; // 83
 
   // Using pointers in expressions with some basic pointer arithmetic.
 
@@ -161,7 +166,7 @@ int main() {
   string *p2 {&s2};
   string *p3 {&s1};
   // For comparison remember we're comparing pointers as is so we're comparing
-  // addresses, NOT to what the data is they point to.
+  // addresses, not to what the data is they point to.
   cout << boolalpha;
   cout << (p1 == p2) << endl; // false
   cout << (p1 == p3) << endl; // true
@@ -191,5 +196,41 @@ int main() {
   // 2. Constant pointers.
   // 3. Constant pointers to constants.
 
+  // Pass by reference with pointers
+  int value {100};
+  int *another_int_ptr {nullptr};
+  cout << value << endl;
+  double_data(&value);
+  cout << value << endl;
+  another_int_ptr = &value;
+  double_data(another_int_ptr);
+  cout << value << endl;
+
+  // Pass by reference with pointers on a constant vector.
+  const vector<string> names {"Bradford", "Josce", "Alex"};
+  display(&names);
+
+  // Looping over dereferenced array, printing, and incrementing.
+  int some_nums[] {12, 513, 64, 903, -1};
+  display(some_nums, -1);
+
   return 0;
+}
+
+void double_data(int *int_ptr) {
+  *int_ptr *= 2;
+}
+
+// Takes a constant pointer that points to a constant vector meaning
+// neither can be reassigned - compiler would complain.
+void display(const vector<string> *const vec) {
+  for (auto item : *vec) {
+    cout << item << endl;
+  }
+}
+
+void display(int *array, int sentinel) {
+  while (*array != sentinel) {
+    cout << *array++ << endl;
+  }
 }
