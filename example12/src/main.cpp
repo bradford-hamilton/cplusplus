@@ -16,6 +16,12 @@ So after all the learns on pointers, what is a reference?
 
 */
 
+// Generally speaking you want to use a reference (instead of a pointer) in
+// pass by reference situations where:
+// 1. The function DOES need to modify original parameter.
+// 2. The parameter is expensive to copy.
+// 3. The parameter will never be a nullptr.
+
 int main() {
   // --------------------------------------------------
   // General idea (think #6 from points above)
