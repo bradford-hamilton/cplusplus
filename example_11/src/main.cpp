@@ -27,6 +27,10 @@ void double_data(int *int_ptr);
 // Overloading
 void display(const vector<string> *const vec);
 void display(int *array, int sentinel);
+// Returning a pointer
+int *largest_int(int *int_ptr1, int *int_ptr2);
+// Returning dynamically allocated memory
+int *create_array(size_t size, int init_value = 0);
 
 // "&" - the address operator - unary operator - operand cannot be const or expression.
 int main() {
@@ -214,6 +218,23 @@ int main() {
   int some_nums[] {12, 513, 64, 903, -1};
   display(some_nums, -1);
 
+  // Func that returns a pointer
+  int a {5};
+  int b {3};
+  int *ptr_to_largest_int {nullptr};
+  ptr_to_largest_int = largest_int(&a, &b);
+  cout << ptr_to_largest_int << endl;
+  cout << *ptr_to_largest_int << endl;
+
+  // Returning dynamically allocated memory
+  int *my_neat_array {nullptr};
+  my_neat_array = create_array(10, 2);
+  cout << my_neat_array << endl;
+  cout << *(my_neat_array + 1) << endl;
+  cout << *(my_neat_array + 5) << endl;
+  cout << *(my_neat_array + 9) << endl;
+  delete [] my_neat_array;
+
   return 0;
 }
 
@@ -234,3 +255,42 @@ void display(int *array, int sentinel) {
     cout << *array++ << endl;
   }
 }
+
+int *largest_int(int *int_ptr1, int *int_ptr2) {
+  if (*int_ptr1 > *int_ptr2) {
+    return int_ptr1;
+  }
+  return int_ptr2;
+}
+
+int *create_array(size_t size, int init_value) {
+  int *new_storage {nullptr};
+  new_storage = new int[size];
+
+  for (size_t i {0}; i < size; i++) {
+    *(new_storage + i) = init_value;
+  }
+
+  return new_storage;
+}
+
+/*
+
+Do not return a pointer to a local variable from within the function scope.
+The variable was on the stack and the function terminates, so the variable
+has ended its lifetime.
+
+int *dont_do_this() {
+  int size {};
+  ...
+  return &size;
+}
+
+int *or_this() {
+  int size {};
+  int *int_ptr {&size};
+  ...
+  return int_ptr;
+}
+
+*/
