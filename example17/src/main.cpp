@@ -1,6 +1,8 @@
 #include <iostream>
+#include "Player.h"
 
 /*
+
 Constructors are:
   - Special member method
   - Invoked during object creation
@@ -17,40 +19,41 @@ Destructors are:
   - Only 1 destructor is allowed per class and NO overloading
   - Useful for releasing memory and other resources
   - When a variable goes out of scope, destructor called automatically
-*/
 
-// Player class with overloaded constructor and a destructor all
-// in same file here for simplicity's sake. This is showing both
-// overloaded constructor calls as well as a destructor call. Notice
-// destructor calls happen in the opposite direction from recently
-// defined -> oldest defined when called after leaving scope.
-class Player {
+A default constructor is created when you do not provide one. Say you have
+the Player class from below, but with no defined a constructor, you can still
+call and use the default one. Below shows default constructor calls (again) in
+the case that "Player" does not have one defined.
 
+Player frank;
+Player *mary = new Player;
+delete mary;
+
+Instead though you should always have your own user-defined no-args constrcutor
+like the following:
+
+class Account {
 private:
   std::string name;
-  int health;
-  int xp;
-
+  double balance;
 public:
-  // Overloaded constructor
-  Player() {
-    std::cout << "No args constructor called" << std::endl;
-  };
-  Player(std::string name) {
-    std::cout << "name arg constructor called" << std::endl;
-  };
-  Player(std::string name, int health, int xp) {
-    std::cout << "name, health, and xp constructor called" << std::endl;
-  };
-  // Destructor
-  ~Player() {
-    std::cout << name << " destructor called" << std::endl;
-  };
-  // methods
-  void set_name(std::string name_val) {
-    name = name_val;
+  Account() {
+    name = "None";
+    balance = 0.0;
   }
 };
+
+Last note though is that if you do have a contructor defined, lets say just one,
+and it is asking for arguments (so it isn't a "default constructor") C++ will then
+no longer provide that default and objects will only be able to be created from
+that class through the args-constructor.
+
+*/
+
+// This is showing both overloaded constructor calls as well as a
+// destructor call. Notice destructor calls happen in the opposite
+// direction from recently defined -> oldest defined when called
+// after leaving scope.
 
 int main() {
   // Blocks for showing the construction of an object followed by its
