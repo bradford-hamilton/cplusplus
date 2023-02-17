@@ -102,3 +102,42 @@ int main() {
 
   return 0;
 }
+
+// Major issues will come from doing a shallow copy on a class with a
+// pointer member. This makes sense in the chain of events - A copy is made
+// from &source and the pointer value is copied. Now we have 2 objects that
+// with a member pointing to the same area of memory. When the copy goes out
+// of scope (like in "display_player"), the destructor is then called which
+// will delete the memory! Now the class that was copied from points to
+// released memory. Or something close to this :)
+
+// In your user-provided copy constructor you always want to use a deep copy
+// when you have a raw pointer as a class member. This way each copy will have
+// a pointer to unique storage on the heap.
+
+class Deep {
+private:
+  int *data;
+public:
+  Deep(int d);
+  Deep (const Deep &source);
+  ~Deep();
+};
+
+Deep::Deep(int d) {
+  data = new int;
+  *data = d;
+}
+
+Deep::~Deep() {
+  delete data;
+  std::cout << "constructor freeing memory" << std::endl;
+}
+
+// Create new heap storage and assign the data that was _pointed to_
+// from source member to this new heap location.
+Deep::Deep(const Deep &source) : Deep{*source.data} {
+  data = new int;
+  *data = *source.data;
+  std::cout << "deep copy constructor" << std::endl;
+}
