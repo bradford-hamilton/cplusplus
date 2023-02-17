@@ -11,10 +11,18 @@ public:
   Player();
   Player(std::string name_val);
   Player(std::string name_val, int health_val, int xp_val);
+
+  // Copy constructor
+  Player(const Player &source);
+
   // Destructor
   ~Player();
+
   // methods
   void set_name(std::string name_val);
+  std::string get_name();
+  int get_health();
+  int get_xp();
 };
 
 #endif
