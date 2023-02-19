@@ -18,17 +18,20 @@ void display_active_players() {
 }
 
 int main() {
-
   {
-    display_active_players();         // Total Player objects: 0
-    Player obj1 {"Josce", 0, 0};
-    display_active_players();         // Total Player objects: 1
-    Player obj2 {"Bradford", 0, 0};
-    display_active_players();         // Total Player objects: 2
-    Player obj3 {"Bradford", 0, 0}; 
+    display_active_players();           // Total Player objects: 0
+    Player obj1 {"Josce", 50, 50};
+    display_active_players();           // Total Player objects: 1
+    Player obj2 {"Bradford", 100, 100};
+    display_active_players();           // Total Player objects: 2
+    Player obj3 {"Alex", 75, 75}; 
   }
+  display_active_players();             // Total Player objects: 0
 
-  display_active_players();           // Total Player objects: 0
+  Player *enemy = new Player{"Kate", 100, 100};
+  display_active_players();             // Total Player objects: 1
+  delete enemy;
+  display_active_players();             // Total Player objects: 0
 
   return 0;
 }
