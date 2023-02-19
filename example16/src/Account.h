@@ -15,4 +15,4 @@ public:
   double get_balance();  
 };
 
-#endif
+#endif // _ACCOUNT_H_

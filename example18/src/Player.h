@@ -27,4 +27,4 @@ public:
   int get_xp();
 };
 
-#endif
+#endif //_PLAYER_H_

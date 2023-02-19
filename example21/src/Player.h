@@ -17,4 +17,4 @@ public:
   ~Player();
 };
 
-#endif
+#endif // _PLAYER_H_

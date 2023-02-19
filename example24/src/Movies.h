@@ -22,4 +22,4 @@ public:
   void display() const;
 };
 
-#endif // MOVIES_H_
+#endif // _MOVIES_H_

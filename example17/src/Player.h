@@ -17,4 +17,4 @@ public:
   void set_name(std::string name_val);
 };
 
-#endif
+#endif // _PLAYER_H_
