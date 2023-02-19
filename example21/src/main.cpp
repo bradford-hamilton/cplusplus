@@ -11,21 +11,24 @@ Static Class Members:
 */
 
 void display_active_players() {
-  std::cout << Player::get_num_players() << std::endl;
+  std::cout
+    << "Total Player objects: "
+    << Player::get_num_players()
+    << std::endl;
 }
 
 int main() {
 
   {
-    display_active_players();         // 0
+    display_active_players();         // Total Player objects: 0
     Player obj1 {"Josce", 0, 0};
-    display_active_players();         // 1
+    display_active_players();         // Total Player objects: 1
     Player obj2 {"Bradford", 0, 0};
-    display_active_players();         // 2
+    display_active_players();         // Total Player objects: 2
     Player obj3 {"Bradford", 0, 0}; 
   }
 
-  display_active_players();           // 0
+  display_active_players();           // Total Player objects: 0
 
   return 0;
 }
