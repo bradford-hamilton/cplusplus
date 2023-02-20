@@ -78,9 +78,42 @@ NeatString &NeatString::operator=(NeatString &&rhs) {
   return *this;
 }
 
+// Overload unary operator using member method
+NeatString NeatString::operator-() const {
+  char *buff = new char[std::strlen(this->str)+1];
+  std::strcpy(buff, this->str);
+
+  for (size_t i = 0; i < std::strlen(buff); i++) {
+    buff[i] = std::tolower(buff[i]);
+  }
+
+  NeatString temp {buff};
+  delete [] buff;
+
+  return temp;
+}
+
+// Binary operator (==) overload example
+bool NeatString::operator==(const NeatString &rhs) {
+  return (std::strcmp(this->str, rhs.str) == 0);
+}
+
+// Binary operator (+) overload example
+NeatString NeatString::operator+(const NeatString &rhs) const {
+  size_t buff_size = std::strlen(this->str) + std::strlen(rhs.str) + 1;
+  char *buff = new char[buff_size];
+
+  std::strcpy(buff, this->str);
+  std::strcat(buff, rhs.str);
+
+  NeatString temp {buff};
+  delete [] buff;
+
+  return temp;
+}
+
 // Destructor
 NeatString::~NeatString() {
-  std::cout << "Desructor" << std::endl;
   delete [] str;
 }
 

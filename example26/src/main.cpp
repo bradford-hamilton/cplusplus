@@ -13,6 +13,7 @@ Operator Overloading:
 */
 
 int main() {
+  std::cout << std::boolalpha;
   // Copy assignment operator (=)
   // C++ provides a default assignment operator used for assigning
   // one object to another:
@@ -42,6 +43,29 @@ int main() {
   NeatString s1;            // No-args constructor
   s1 = NeatString{"Neato"}; // Overloaded constructor then MOVE operator= called
   s1 = "Frank";             // Overloaded constructor then MOVE operator= called
+
+  // -----------------------------------------------------------------------------
+
+  NeatString bradford {"Bradford"};
+  NeatString josce {"JOSCE"};
+  NeatString another_bradford {"Bradford"};
+
+  bradford.display(); // Bradford:8
+  josce.display();    // JOSCE:5
+
+  NeatString lower_jo = -josce;
+  lower_jo.display(); // josce:5
+
+  std::cout << (bradford == josce) << std::endl; // false
+  std::cout << (bradford == another_bradford) << std::endl; // true
+
+  NeatString str1 {"Strings are"};
+  NeatString str2 {" neat"};
+  NeatString brad_n_jo = str1 + str2;
+
+  brad_n_jo.display(); // Strings are neat:16
+
+  std::cout << (str1+str2).get_str() << std::endl; // Strings are neat
 
   return 0;
 }

@@ -20,6 +20,18 @@ public:
   // Operator overload for MOVE assignment
   NeatString &operator=(NeatString &&rhs);
 
+  // Unary operator overload example
+  NeatString operator-() const;
+  // NeatString operator++(); // pre-increment
+  // NeatString operator++(int); // post-increment
+  // NeatString operator!() const;
+
+  // Binary operator (==) overload example
+  bool operator==(const NeatString &rhs);
+
+  // Binary operator (+) overload example
+  NeatString operator+(const NeatString &rhs) const;
+
   // Destructor
   ~NeatString();
 
