@@ -67,5 +67,12 @@ int main() {
 
   std::cout << (str1+str2).get_str() << std::endl; // Strings are neat
 
+  // -----------------------------------------------------------------------------
+
+  NeatString len5_str {"abcdef"};
+  NeatString len7_str {"abcdefgh"};
+  std::cout << (len5_str > len7_str) << std::endl; // false
+  std::cout << (len7_str > len5_str) << std::endl; // true
+
   return 0;
 }

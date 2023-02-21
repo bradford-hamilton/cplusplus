@@ -2,6 +2,8 @@
 #define _NEAT_STRING_H_
 
 class NeatString {
+  // Example of a NON-member, global function for operator overloading.
+  friend bool operator>(const NeatString &lhs, const NeatString &rhs);
 private:
   char *str; // Pointer to a char[] that holds a C-style string
 public:

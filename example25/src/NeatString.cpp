@@ -125,3 +125,9 @@ void NeatString::display() const {
 int NeatString::get_length() const { return std::strlen(str); }
 
 const char *NeatString::get_str() const { return str; }
+
+// Global friend operator overload, notice it takes two args (lhs & rhs), since
+// it is not a member function.
+bool operator>(const NeatString &lhs, const NeatString &rhs) {
+  return (lhs.get_length() > rhs.get_length());
+}
