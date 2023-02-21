@@ -2,6 +2,8 @@
 
 /*
 
+-----------------------------------------------------------------------------
+
 Inheritance
 - Provides a method for creating new classes from existing classes
 - The new class contains the data and behaviors of the existing class
@@ -41,6 +43,23 @@ protected:
 - Accesible from the Base Class itself
 - Accesible from class Derived from Base
 - Not accessible by objects of Base or Derived
+
+-----------------------------------------------------------------------------
+
+What does a Derived Class NOT inherit?
+- Base class constructors
+- Base class destructor
+- Base class overloaded assignment operators
+- Base class friend functions
+
+However, the derived class constructors, destructors, and overloaded assignment
+operators can invoke the base class versions.
+
+Note: C++11 allows explicit inheritance of base "non-special" constructors with
+- using Base::Base; anywhere in the derived class declaration
+- Lots of rules involved, often better to define constructors yourself.
+
+-----------------------------------------------------------------------------
 
 */
 
