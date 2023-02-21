@@ -90,7 +90,7 @@ int main() {
   // modifiers are essentially the same when dealing with objects.
 
   /*
-  
+
   Base base;
   base.a = 100; // Okay
   base.b = 200; // Compiler error
