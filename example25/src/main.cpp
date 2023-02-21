@@ -74,5 +74,14 @@ int main() {
   std::cout << (len5_str > len7_str) << std::endl; // false
   std::cout << (len7_str > len5_str) << std::endl; // true
 
+  // -----------------------------------------------------------------------------
+
+  NeatString its_for_the_stream {"better be in stream"};
+  std::cout << its_for_the_stream << std::endl; // better be in stream
+  std::cout << "Enter a string:" << std::endl;
+  NeatString neat_strings_in;
+  std::cin >> neat_strings_in;
+  std::cout << neat_strings_in << std::endl;
+
   return 0;
 }

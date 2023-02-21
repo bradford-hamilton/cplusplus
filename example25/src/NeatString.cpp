@@ -131,3 +131,23 @@ const char *NeatString::get_str() const { return str; }
 bool operator>(const NeatString &lhs, const NeatString &rhs) {
   return (lhs.get_length() > rhs.get_length());
 }
+
+// Overloading stream insertion operator.
+std::ostream &operator<<(std::ostream &out, const NeatString &rhs) {
+  // Friend of NeatString, so can access str member directly.
+  out << rhs.str;
+  return out;
+}
+
+// Overloading stream extration operator.
+std::istream &operator>>(std::istream &in, NeatString &rhs) {
+  // Just creating larger buffer here for the example, but this is not safe.
+  char *buff {new char[1000]};
+  in >> buff;
+
+  rhs = NeatString{buff}; // Using move, stealing pointer, very efficient.
+
+  delete [] buff;
+
+  return in;
+}

@@ -4,6 +4,10 @@
 class NeatString {
   // Example of a NON-member, global function for operator overloading.
   friend bool operator>(const NeatString &lhs, const NeatString &rhs);
+  // Overloading stream insertion operator.
+  friend std::ostream &operator<<(std::ostream &out, const NeatString &rhs);
+  // Overloading stream extration operator.
+  friend std::istream &operator>>(std::istream &in, NeatString &rhs);
 private:
   char *str; // Pointer to a char[] that holds a C-style string
 public:
@@ -44,3 +48,7 @@ public:
 };
 
 #endif // _NEAT_STRING_H_
+
+// Stream insertion and extraction operators (<<, >>) - print data out, read data in.
+// Doesn't usually make sense to implement these as member methods as the left operand
+// must be a user defined class and it's not the way we normally use these operators.
