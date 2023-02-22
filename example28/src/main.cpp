@@ -37,6 +37,11 @@ public:
     : Base{x}, doubled_value{x*2} {
     std::cout << "Derived int constructor called" << std::endl;
   }
+  // Copy constructor on derived class
+  Derived(const Derived &other)
+    : Base{other}, doubled_value{other.doubled_value} {
+    std::cout << "Derived copy constructor called" << std::endl;
+  }
 };
 
 int main() {
