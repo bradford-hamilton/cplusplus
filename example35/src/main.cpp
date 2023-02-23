@@ -27,6 +27,9 @@ So it seems the abstract base class serves as a sort of class interface for that
 class type. All derived concrete classes must override (implement) the pure virtual
 funcs defined in the base abstract class.
 
+Sometimes base abstract classes that are meant to be used as an interface will be
+name I_Class, so below would be I_Shape or IShape.
+
 */
 
 class Shape {
