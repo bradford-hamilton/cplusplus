@@ -110,14 +110,81 @@ int main() {
     vec.push_back(std::move(ptr)); // OK
   } // automatically deleted/cleaned up
 
+  // ---------------------------------------------------------------------------------------------------
+
   // BEST/PROPER WAY create unique pointers since C++14 is using "make_unique"
   // where we use initialization values used by the type's constructor, which
   // is way more efficient.
   {
-    std::unique_ptr<int> p2 = std::make_unique<int>(100);
-    std::unique_ptr<Account> a2 = std::make_unique<Account>("Curly");
-    auto p3 = std::make_unique<int>(100);
+    std::unique_ptr<int> p1 = std::make_unique<int>(100);
+    std::unique_ptr<Account> a1 = std::make_unique<Account>("Curly");
+    auto p2 = std::make_unique<int>(200);
+  } // automatically deleted/cleaned up
+
+  // ---------------------------------------------------------------------------------------------------
+
+  /*
+    Shared Pointers
+    - Provides shared ownership of heap objects
+    - shared_ptr<T>
+      - Points to an object of type T on the heap
+      - It is not unique - there can be many shared pointers pointing to the same object on the heap
+      - Establishes shared ownership relationship
+      - CAN be assigned and copied
+      - CAN be moved
+      - Doesn't support managing arrays by default
+      - When the use count is zero, the manged object on the heap is destoyed
+  */
+
+  {
+    std::shared_ptr<int> p1 {new int {100}};
+    std::cout << *p1 << std::endl; // 100
+    *p1 = 200;
+    std::cout << *p1 << std::endl; // 200
+  } // automatically deleted/cleaned up
+
+  // BEST/PROPER WAY create shared pointers since C++14 is using "make_shared"
+  // where we use initialization values used by the type's constructor, which
+  // is way more efficient.
+
+  {
+    std::shared_ptr<int> p1 = std::make_shared<int>(100);
+    std::shared_ptr<Account> a1 = std::make_shared<Account>("Curly");
+    auto p2 = std::make_shared<int>(100);
+    std::shared_ptr<int> p3;
+    p3 = p1; // Copy assign OK
+  } // automatically deleted/cleaned up
+
+  // use_count method returns the number of shared pointer objects that are 
+  // currently referring to the same heap object.
+  {
+    std::cout << "---------Use counts---------" << std::endl;
+    std::shared_ptr<int> p1 = std::make_shared<int>(100);
+    std::cout << p1.use_count() << std::endl; // 1
+    std::shared_ptr<int> p2 {p1};             // Shared ownership
+    std::cout << p1.use_count() << std::endl; // 2
+    p1.reset();                               // Decrement the use_count; p1 is nulled out;
+    std::cout << p1.use_count() << std::endl; // 0
+    std::cout << p2.use_count() << std::endl; // 1
+  } // automatically deleted/cleaned up
+
+  // As mentioned, shared pointers can be copied, assigned, and moved
+  {
+    std::vector<std::shared_ptr<int>> vec;
+    std::shared_ptr<int> ptr = std::make_shared<int>(100);
+    vec.push_back(ptr); // OK - copy IS allowed
+    std::cout << ptr.use_count() << std::endl; // 2
+  } // automatically deleted/cleaned up
+
+  // All 3 pointers point to the SAME object on the heap!
+  // When the use_count becomes 0, the heap object is deallocated
+  {
+    std::shared_ptr<int> p1 = std::make_shared<int>(100); // use_count: 1
+    std::shared_ptr<int> p2 {p1};                         // use_count: 2
+    std::shared_ptr<int> p3;
+    p3 = p1;                                              // use_count: 3
   } // automatically deleted/cleaned up
 
   return 0;
 }
+
