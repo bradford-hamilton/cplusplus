@@ -68,6 +68,14 @@ public:
   }
 };
 
+// Used for last example
+class SomeClass {};
+void my_deleter(SomeClass *raw_pointer) {
+  std::cout << "custom function deleter" << std::endl;
+  // Your custom deleter code ...
+  delete raw_pointer;
+};
+
 int main() {
   /*
   
@@ -257,6 +265,23 @@ int main() {
     // (whichever makes sense) which we did above in class B and is why this code is valid.
   }
 
+  // Custom deleters
+  // Sometimes when we destroy a smart pointer we need more than to just destroy the object on
+  // the heap. These are special use-cases. C++ smart pointers allow you to provide custom
+  // deleters. There are lots of ways to acheive this - functions, lambdas, others...
+  {
+    // Example using a function to provide a custom deleter
+    std::shared_ptr<SomeClass> ptr { new SomeClass{}, my_deleter };
+  }
+
+  {
+    // Example using a lamda to provide a custom deleter
+    std::shared_ptr<SomeClass> ptr (new SomeClass{},
+      [] (SomeClass *ptr) {
+        std::cout << "custom lambda deleter" << std::endl;
+        delete ptr;
+      });
+  }
+
   return 0;
 }
-
