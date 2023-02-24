@@ -185,6 +185,78 @@ int main() {
     p3 = p1;                                              // use_count: 3
   } // automatically deleted/cleaned up
 
+  // ---------------------------------------------------------------------------------------------------
+
+  /*
+    Weak Pointers
+    - Provides non-owning "weak" reference
+    - weak_ptr<T>
+      - Points to an object of type T on the heap
+      - Does not participate in owning relationship
+      - Always created from a shared_ptr
+      - Does NOT increment or decrement reference use count
+      - Used to prevent strong reference cycles which could prevent objects from being deleted
+
+    When A refers to B and B refers to A, the strong ownership prevents heap deallocation:
+
+            A                                    B
+    ------------------                  ------------------
+    |                 |   ---------->   |                |
+    |                 |                 |                |
+    |  shared_ptr<B>  |                 |  shared_ptr<A> |
+    |                 |                 |                |
+    |                 |   <----------   |                |
+    ------------------                  ------------------
+
+  Solution - make one of the pointers non-owning or "weak". Now heap storage is deallocated properly:
+
+            A                                    B
+    ------------------                  ------------------
+    |                 |   ---------->   |                |
+    |                 |                 |                |
+    |  shared_ptr<B>  |                 |  weak_ptr<A>   |
+    |                 |                 |                |
+    |                 |   <----------   |                |
+    ------------------                  ------------------
+  */
+
+  class B; // Forward declaration
+
+  class A {
+  private:
+    std::shared_ptr<B> b_ptr;
+  public:
+    void set_B(std::shared_ptr<B> &b) {
+      b_ptr = b;
+    }
+    A() { std::cout << "A constructor" << std::endl; }
+    ~A() { std::cout << "A destructor" << std::endl; }
+  };
+
+  class B {
+  private:
+    // Originally: "std::shared_ptr<A> a_ptr"
+    std::weak_ptr<A> a_ptr;
+  public:
+    void set_A(std::shared_ptr<A> &a) {
+      a_ptr = a;
+    }
+    B() { std::cout << "B constructor" << std::endl; }
+    ~B() { std::cout << "B destructor" << std::endl; }
+  };
+
+
+  {
+    std::shared_ptr<A> a = std::make_shared<A>();
+    std::shared_ptr<B> b = std::make_shared<B>();
+    a->set_B(b);
+    b->set_A(a);
+    // At this point (when both classes have shared pointers) when a and b go out of scope
+    // they still both have a reference count of 1 so the destructors are not called and
+    // memory is not freed. That is until you create a weak pointer from one to the other
+    // (whichever makes sense) which we did above in class B and is why this code is valid.
+  }
+
   return 0;
 }
 
