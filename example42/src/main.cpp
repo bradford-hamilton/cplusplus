@@ -48,7 +48,8 @@ char max(char a, char b) {
 };
 
 // Using generic programming through a function template:
-// ------ typename/class are interchangeable below ------
+// ------ typename/class are interchangeable below
+// ------ also can be a non-type template param so like template<int N>
 // Remember this will not cause the compiler to generte any code
 // until a user uses a specialized version of the template.
 template <typename T>
