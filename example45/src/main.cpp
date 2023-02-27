@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 /*
 
@@ -54,6 +55,11 @@ it = it1
 it->
 it == it1
 
+Be careful around iterators becoming invalid:
+- Example you are iterating over a vector of 10 elements and we clear() the
+  vector while iterating, what happens? Undefined behavior - our iterators
+  are pointing to invalid locations
+
 ----------------------------------------------------------------------------
 
 Types of algorithms:
@@ -64,6 +70,8 @@ Types of algorithms:
 ----------------------------------------------------------------------------
 
 */
+
+void square(int x);
 
 int main() {
   std::vector<int> vec {1, 2, 3};
@@ -101,5 +109,50 @@ int main() {
 
   std::cout << "\n---------------------------------------" << std::endl;
 
+  std::vector<int> vec2 {1, 2, 3, 4, 5, 6, 7, 8, 9};
+
+  auto loc = std::find(vec2.begin(), vec2.end(), 7); // find returns an iterator (std::vector<int>::iterator)
+
+  if (loc != vec2.end()) {
+    std::cout << *loc << std::endl; // 7
+  }
+
+  // std::find uses comparison under the hood, so if you have user-defined objects you will have
+  // to make sure you override the apropriate operator(s)
+
+  std::cout << "\n---------------------------------------" << std::endl;
+
+  // for_each using a function object
+  struct SquareFunctor {
+    void operator()(int x) { // overload () operator
+      std::cout << x * x << " ";
+    }
+  };
+
+  SquareFunctor square_func; // Function object
+  std::vector<int> vec3 {1, 2, 3, 4};
+
+  std::for_each(vec3.begin(), vec3.end(), square_func); // 1 4 9 16
+
+  std::cout << "\n---------------------------------------" << std::endl;
+
+  // for_each using a function pointer
+  std::vector<int> vec4 {1, 2, 3, 4};
+
+  std::for_each(vec4.begin(), vec4.end(), square); // 1 4 9 16
+
+  std::cout << "\n---------------------------------------" << std::endl;
+
+  // for_each using a lambda
+  std::vector<int> vec5 {1, 2, 3, 4};
+
+  std::for_each(vec5.begin(), vec5.end(), [](int x) {
+    std::cout << x * x << " ";
+  }); // 1 4 9 16
+
   return 0;
+}
+
+void square(int x) {
+  std::cout << x * x << " ";
 }
