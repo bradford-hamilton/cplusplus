@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
 
 /*
 
@@ -47,6 +48,18 @@ int main() {
   out_file << " " << name << " " << age << " " << weight;
 
   out_file.close(); // Don't forget to close file
+
+  // ----------------------------------------------------------------------------------
+  // String streams
+
+  int num1 {100};
+  double total1 {1234.56};
+  std::string name1 {"Bradford"};
+  std::ostringstream oss {};
+
+  oss << name1 << " " << num1 << " " << total1;
+
+  std::cout << oss.str() << std::endl;
 
   return 0;
 }
