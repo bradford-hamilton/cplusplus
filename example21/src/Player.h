@@ -1,6 +1,8 @@
 #ifndef _PLAYER_H_
 #define _PLAYER_H_
 
+#include <string>
+
 class Player {
 private:
   static int num_players;
